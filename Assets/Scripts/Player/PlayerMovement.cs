@@ -1,20 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _MoveSpeed = 5f;
-    private Vector2 _move;
-    public Rigidbody2D _rb;
+    [SerializeField] private float moveSpeed = 5f;
+    
+    private Vector2 _movement;
+    public Rigidbody2D rb;
 
     private void Update()
     {
-        _move.x = Input.GetAxis("Horizontal");
-        _move.y = Input.GetAxis("Vertical");
+        _movement.x = Input.GetAxis("Horizontal");
+        _movement.y = Input.GetAxis("Vertical");
     }
     private void FixedUpdate()
     {
-        _rb.MovePosition(_rb.position + _move * _MoveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + _movement * moveSpeed * Time.deltaTime);
     }
 }
