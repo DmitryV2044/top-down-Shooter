@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : NPC
 {
-    public Player Target;
+    public Player Target => _target.GetComponent<Player>();
 
     public abstract void Attack();
 }

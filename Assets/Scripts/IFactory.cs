@@ -1,4 +1,4 @@
 public interface IFactory<T>
 {
-    public T Get();
+    public T GetCreated();
 }
