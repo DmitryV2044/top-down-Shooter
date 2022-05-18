@@ -1,19 +1,17 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public partial class ReactableEntity : MonoBehaviour
+public abstract class ReactableEntity : MonoBehaviour
 {
-    private Transform _target;
-
+    internal Transform _target;
+    
     private bool _isRadiusSearching = true;
 
-    private int _radius;
+    private float _radius;
 
     public Action RadiusEntered;
 
-    public void AddRadiusReaction(Transform target, int radius)
+    public void EnableRadiusReaction(Transform target, float radius)
     {
         _target = target;
         _radius = radius;
@@ -37,12 +35,8 @@ public partial class ReactableEntity : MonoBehaviour
         if (Vector2.Distance(transform.position, _target.position) <= _radius)
             return true;
 
-        RadiusEntered.Invoke();
         return false;
     }
 
-    private void OnDisable()
-    {
-        UpdateService.OnFixedUpdate -= DetectRadiusEnter;
-    }
+    private void OnDisable() => UpdateService.OnFixedUpdate -= DetectRadiusEnter;
 }

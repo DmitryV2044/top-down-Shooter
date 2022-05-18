@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class NPC : ReactableEntity
+public class NPC : ReactableEntity
 {
+    internal float WalkSpeed;
+
     public virtual void Idle() { }
 
     public virtual void AssignToTarget(Transform target) { }
