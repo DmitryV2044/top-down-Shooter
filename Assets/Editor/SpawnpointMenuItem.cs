@@ -1,19 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class SpawnpointMenuItem : MonoBehaviour
+public class SpawnpointMenuItem : EditorObjectCreator
 {
-    [MenuItem("GameObject/Spawnpoints/Ninja Spawnpoint", priority = 2)]
-    private static void CreateNinjaSpawnPoint()
-    {
-        CreateSpawnpoint("NinjaSpawnpoint");
-    }
+    private const string InitalPath = "GameObject/Spawnpoints/";
 
-    private static void CreateSpawnpoint(string name)
-    {
-        Object spawnpoint = Instantiate(Resources.Load($"Spawnpoints/{name}"));
-        spawnpoint.name = name;
-    }
+    [MenuItem(InitalPath + "Ninja Spawnpoint", priority = 2)]
+    private static void CreateNinjaSpawnPoint(MenuCommand menuCommand) => CreateCustomGameObject<NinjaSpawnpoint>("Ninja Spawnpoint", menuCommand);
+
 }
