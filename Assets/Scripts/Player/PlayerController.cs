@@ -3,9 +3,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private Transform _shotPoint;
     
     private Vector2 _movement;
     private Rigidbody2D _rigidbody;
+    private PoolBullets _poolBullets;
 
     private void Start()
     {
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateService.OnUpdate += GetInput;
         UpdateService.OnFixedUpdate += MovePlayer;
+        UpdateService.OnUpdate += Shot;
     }
 
     private void GetInput()
@@ -28,9 +31,16 @@ public class PlayerController : MonoBehaviour
         _rigidbody.MovePosition(_rigidbody.position + _movement * _moveSpeed * Time.deltaTime);
     }
 
+    private void Shot()
+    {
+        if (Input.GetMouseButtonDown(0))
+            this._poolBullets.CreateBullet(_shotPoint);
+    }
+
     private void OnDisable()
     {
         UpdateService.OnUpdate -= GetInput;
         UpdateService.OnFixedUpdate -= MovePlayer;
+        UpdateService.OnUpdate -= Shot;
     }
 }
