@@ -22,8 +22,8 @@ public class Previewer : EditorScript
             _spawnedInstance = GetComponentInChildren<T>();
 
         if (_spawnedInstance != null)
-            DestroyImmediate(_spawnedInstance.gameObject);
+            Undo.DestroyObjectImmediate(_spawnedInstance.gameObject);
 
-        DestroyImmediate(this);
+        Undo.DestroyObjectImmediate(this);
     }
 }
