@@ -4,10 +4,11 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private Transform _shotPoint;
+    [SerializeField] private Joystick _joystick;
     
     private Vector2 _movement;
+    private float dirX, dirY;
     private Rigidbody2D _rigidbody;
-    private PoolBullets _poolBullets;
 
     private void Start()
     {
@@ -18,29 +19,23 @@ public class PlayerController : MonoBehaviour
     {
         UpdateService.OnUpdate += GetInput;
         UpdateService.OnFixedUpdate += MovePlayer;
-        UpdateService.OnUpdate += Shot;
     }
 
     private void GetInput()
     {
-        _movement.x = Input.GetAxis("Horizontal");
-        _movement.y = Input.GetAxis("Vertical");
+        dirX = _joystick.Horizontal * _moveSpeed;
+        dirY = _joystick.Vertical * _moveSpeed;
+        
+        _movement = new Vector2(dirX, dirY);
     }
     private void MovePlayer()
     {
         _rigidbody.MovePosition(_rigidbody.position + _movement * _moveSpeed * Time.deltaTime);
     }
 
-    private void Shot()
-    {
-        if (Input.GetMouseButtonDown(0))
-            this._poolBullets.CreateBullet(_shotPoint);
-    }
-
     private void OnDisable()
     {
         UpdateService.OnUpdate -= GetInput;
         UpdateService.OnFixedUpdate -= MovePlayer;
-        UpdateService.OnUpdate -= Shot;
     }
 }
