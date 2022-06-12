@@ -6,14 +6,18 @@ using UnityEngine;
 public class Previewer : EditorScript
 {
     private NPC _spawnedInstance;
+    [HideInInspector] public float DetectionRadius;
 
-    public void CreatePreview<T>() where T : NPC
+    public void CreatePreview<T>(NpcConfig<T> config) where T : NPC
     {   
-        NpcConfig<T>[] configs = Resources.LoadAll<NpcConfig<T>>("Prefabs/Enemies/Configs");
         _spawnedInstance = GetComponentInChildren<T>();
 
         if (_spawnedInstance == null)
-            _spawnedInstance = Instantiate(configs[0].Prefab, transform);
+        {
+            _spawnedInstance = Instantiate(config.Prefab, transform);
+            _spawnedInstance.transform.rotation = Quaternion.Euler(-90, 0, 0);
+        }
+        DetectionRadius = config.DetectionRadius;
     }
 
     public void DeletePreview<T>() where T : NPC
@@ -26,4 +30,12 @@ public class Previewer : EditorScript
 
         Undo.DestroyObjectImmediate(this);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_spawnedInstance == null) return;
+        Gizmos.DrawWireSphere(transform.position, DetectionRadius);
+    }
+
 }
+

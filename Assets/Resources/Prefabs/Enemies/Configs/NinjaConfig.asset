@@ -15,5 +15,5 @@ MonoBehaviour:
   Prefab: {fileID: 3957085832899235219, guid: 1b70210c6207e457cb07bfe92810e1ef, type: 3}
   WalkSpeed: 1
   RadiusDetector: 1
-  DetectionRadius: 10
+  DetectionRadius: 6
   _soundDetector: 0
